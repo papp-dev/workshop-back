@@ -5,9 +5,9 @@ spring:
         livereload:
             enabled: true
     application:
-        name: user-service
+        name: workshop-back
     datasource:
-        url: jdbc:mysql://mysql:3306/workshop-back
+        url: jdbc:mysql://localhost:3306/workshop-back
         username: root
         password: password
         driver-class-name: com.mysql.cj.jdbc.Driver

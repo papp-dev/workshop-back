@@ -24,26 +24,26 @@
   ],
   "tags": [
     {
-      "name": "user",
-      "description": "Operations about user"
+      "name": "people",
+      "description": "Operations about people"
     }
   ],
   "paths": {
-    "/register": {
+    "/people": {
       "post": {
         "tags": [
-          "User actions"
+          "People actions"
         ],
-        "summary": "Register a new user",
-        "description": "Register a new user",
-        "operationId": "register",
+        "summary": "Create a new person",
+        "description": "Create a new person",
+        "operationId": "create",
         "requestBody": {
-          "description": "Register a new user",
+          "description": "Create a new person",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "user.json"
+                "$ref": "person.json"
               }
             }
           }
@@ -54,83 +54,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "user-response.json"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/login": {
-      "post": {
-        "tags": [
-          "User actions"
-        ],
-        "summary": "Log in and get auth token",
-        "description": "Log in and get auth token",
-        "operationId": "login",
-        "requestBody": {
-          "description": "Log in and get auth token",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "login.json"
-              }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "login-response.json"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/{user_id}/user_profile": {
-      "post": {
-        "tags": [
-          "User profile actions"
-        ],
-        "parameters": [
-          {
-            "name": "user_id",
-            "in": "path",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "summary": "Create user profile",
-        "description": "Create user profile",
-        "operationId": "createUserProfile",
-        "requestBody": {
-          "description": "Create user profile",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "user-profile.json"
-              }
-            }
-          }
-        },
-        "responses": {
-          "default": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "user-profile-response.json"
+                  "$ref": "person-response.json"
                 }
               }
             }
@@ -139,28 +63,21 @@
       },
       "get": {
         "tags": [
-          "User profile actions"
+          "People actions"
         ],
-        "parameters": [
-          {
-            "name": "user_id",
-            "in": "path",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          }
-        ],
-        "summary": "Get user profile",
-        "description": "Get user profile",
-        "operationId": "getUserProfile",
+        "summary": "Get list of person",
+        "description": "Get list of person",
+        "operationId": "list",
         "responses": {
           "default": {
             "description": "successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "user-profile-response.json"
+                  "type": "array",
+                  "items": {
+                    "$ref": "person-response.json"
+                  }
                 }
               }
             }

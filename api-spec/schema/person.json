@@ -1,0 +1,26 @@
+{
+  "title": "Person",
+  "description": "Object for person",
+  "type": "object",
+  "required": [
+    "name",
+    "weight",
+    "height"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "example": "Paulo"
+    },
+    "weight": {
+      "description": "weight in kilos",
+      "type": "number",
+      "example": "60"
+    },
+    "height": {
+      "description": "height in meters",
+      "type": "number",
+      "example": "1.75"
+    }
+  }
+}

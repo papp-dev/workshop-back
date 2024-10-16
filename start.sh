@@ -3,5 +3,6 @@
 (./gradlew -t :bootJar) &
 # Next, start the app.
 # The "PskipDownload" option ensures dependencies are not downloaded again.
+./schemas/migrate.sh
 ./gradlew generateServerCode
 ./gradlew bootRun -PskipDownload=true

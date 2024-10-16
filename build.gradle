@@ -2,6 +2,7 @@ import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
 
 plugins {
 	id 'java'
+	id 'org.jetbrains.kotlin.jvm' version '1.9.20' // Add Kotlin plugin
 	id 'org.springframework.boot' version '3.3.4'
 	id 'io.spring.dependency-management' version '1.1.6'
 	id 'com.diffplug.spotless'  version '6.25.0'
@@ -22,15 +23,23 @@ repositories {
 	mavenCentral()
 }
 
-
 sourceSets {
 	main {
-		def openApiGeneratedOutputDir = project.hasProperty('openApiGeneratedOutputDir') ? project.openApiGeneratedOutputDir : null
-
-		if (openApiGeneratedOutputDir) {
-			java.srcDir("${rootDir}/${openApiGeneratedOutputDir}/src/main/kotlin")
+		java {
+			srcDirs 'src/main/java'
 		}
-		java.srcDir("${rootDir}/generated/src/main/kotlin")
+		def openApiGeneratedOutputDir = project.hasProperty('openApiGeneratedOutputDir') ? project.openApiGeneratedOutputDir : null
+		if (openApiGeneratedOutputDir) {
+			kotlin {
+				srcDirs "${rootDir}/${openApiGeneratedOutputDir}/src/main/kotlin"
+				srcDirs "${rootDir}/${openApiGeneratedOutputDir}/src/main/java"
+			}
+		}
+		kotlin {
+			srcDirs "${rootDir}/generated/src/main/kotlin"
+			srcDirs "${rootDir}/generated/src/main/java"
+		}
+
 	}
 }
 
@@ -78,29 +87,33 @@ tasks.register('generateServerCode', GenerateTask) {
 	globalProperties = ['apis': '', 'models': '']
 }
 
-tasks.register('generateClientCode', GenerateTask) {
-	group = 'OpenAPI Tools'
-	description = 'Generate kotlin ktor code via OpenAPI tools generator.'
-
-	def outputDirVal = 'generated-client'
-	generatorName = 'kotlin'
-	library = 'jvm-ktor'
-	inputSpec = specLocation
-	outputDir = "$rootDir/$outputDirVal"
-	configFile = "$rootDir/open-api-tools.json"
-
-	groupId = 'com.workshop'
-	id = 'back'
-
-	packageName = 'com.workshop.back'
-	apiPackage = 'com.workshop.back.controller'
-	modelPackage = 'com.workshop.back.model'
-	generateApiTests = false
-	generateModelTests = false
-	modelNameSuffix = 'dto'
-
-//	cleanupOutput = true
-}
+//tasks.register('generateServerCode', GenerateTask) {
+//	group = 'OpenAPI Tools'
+//	description = 'Generate Java Spring interfaces for the service layer via OpenAPI tools generator.'
+//
+//	def outputDirVal = 'generated-server'
+//	generatorName = 'spring' // Usar o gerador para Spring Java
+//	inputSpec = specLocation // Local da especificação OpenAPI
+//	outputDir = "$rootDir/$outputDirVal"
+//	configFile = "$rootDir/open-api-tools.json"
+//
+//	packageName = 'com.workshop.back' // Pacote base do código gerado
+//	apiPackage = 'com.workshop.back.controller' // Pacote para as interfaces de controle
+//	modelPackage = 'com.workshop.back.model' // Pacote para os modelos
+//	generateApiTests = false // Não gerar testes de API automaticamente
+//	generateModelTests = false // Não gerar testes de modelo automaticamente
+//	modelNameSuffix = 'dto' // Sufixo opcional para os modelos
+//
+//	// Propriedades globais para gerar somente interfaces
+//	globalProperties = [
+//			'apis': '', // Gerar APIs
+//			'models': '', // Gerar modelos
+//			'apiInterfaces': 'true' // Gera apenas as interfaces das APIs
+//	]
+//
+//	// (Opcional) Ativar a limpeza da saída antes de gerar o código
+//	// cleanupOutput = true
+//}
 
 tasks.register('getDependencies', Copy) {
 	from sourceSets.main.runtimeClasspath

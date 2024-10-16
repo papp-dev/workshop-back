@@ -1,0 +1,35 @@
+{
+  "title": "Person",
+  "description": "Object for person",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": "e043186e-871c-4146-886f-474a7660876e"
+    },
+    "name": {
+      "type": "string",
+      "example": "Paulo"
+    },
+    "weight": {
+      "description": "weight in kilos",
+      "type": "number",
+      "example": "60"
+    },
+    "height": {
+      "description": "height in meters",
+      "type": "number",
+      "example": "1.75"
+    },
+    "imcIndex": {
+      "description": "imc index",
+      "type": "number",
+      "example": "18.0"
+    },
+    "imcClassification": {
+      "description": "imc classification",
+      "type": "string",
+      "example": "Under ideal weight"
+    }
+  }
+}
