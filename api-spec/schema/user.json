@@ -1,0 +1,24 @@
+{
+  "title": "User",
+  "description": "Object for user",
+  "type": "object",
+  "required": [
+    "user_name",
+    "email",
+    "password"
+  ],
+  "properties": {
+    "user_name": {
+      "type": "string",
+      "example": "Paulo"
+    },
+    "email": {
+      "type": "string",
+      "example": "paulo@papp.dev"
+    },
+    "password": {
+      "type": "string",
+      "example": "password"
+    }
+  }
+}

@@ -1,0 +1,118 @@
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.4'
+	id 'io.spring.dependency-management' version '1.1.6'
+	id 'com.diffplug.spotless'  version '6.25.0'
+	id 'org.openapi.generator' version '5.3.0'
+}
+
+group = 'com.workshop'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+	sourceCompatibility = JavaVersion.VERSION_21
+}
+
+repositories {
+	mavenCentral()
+}
+
+
+sourceSets {
+	main {
+		def openApiGeneratedOutputDir = project.hasProperty('openApiGeneratedOutputDir') ? project.openApiGeneratedOutputDir : null
+
+		if (openApiGeneratedOutputDir) {
+			java.srcDir("${rootDir}/${openApiGeneratedOutputDir}/src/main/kotlin")
+		}
+		java.srcDir("${rootDir}/generated/src/main/kotlin")
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springdoc:springdoc-openapi-ui:1.6.14'
+	implementation 'io.swagger.parser.v3:swagger-parser:2.1.22'
+	implementation 'com.google.googlejavaformat:google-java-format:1.24.0'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+spotless {
+	java {
+		googleJavaFormat('1.17.0')  // Replace with your desired version
+	}
+}
+
+def specLocation = "$rootDir/api-spec/schema/swagger-ref.json"
+
+tasks.register('generateServerCode', GenerateTask) {
+	group = 'OpenAPI Tools'
+	description = 'Generate kotlin spring server code via OpenAPI tools generator.'
+
+	def outputDirVal = 'generated'
+	generatorName = 'kotlin-spring'
+	inputSpec = specLocation
+	outputDir = "$rootDir/$outputDirVal"
+	configFile = "$rootDir/open-api-tools.json"
+
+	packageName = 'com.workshop.back'
+	apiPackage = 'com.workshop.back.controller'
+	modelPackage = 'com.workshop.back.model'
+	generateApiTests = false
+	generateModelTests = false
+	modelNameSuffix = 'dto'
+
+	globalProperties = ['apis': '', 'models': '']
+}
+
+tasks.register('generateClientCode', GenerateTask) {
+	group = 'OpenAPI Tools'
+	description = 'Generate kotlin ktor code via OpenAPI tools generator.'
+
+	def outputDirVal = 'generated-client'
+	generatorName = 'kotlin'
+	library = 'jvm-ktor'
+	inputSpec = specLocation
+	outputDir = "$rootDir/$outputDirVal"
+	configFile = "$rootDir/open-api-tools.json"
+
+	groupId = 'com.workshop'
+	id = 'back'
+
+	packageName = 'com.workshop.back'
+	apiPackage = 'com.workshop.back.controller'
+	modelPackage = 'com.workshop.back.model'
+	generateApiTests = false
+	generateModelTests = false
+	modelNameSuffix = 'dto'
+
+//	cleanupOutput = true
+}
+
+tasks.register('getDependencies', Copy) {
+	from sourceSets.main.runtimeClasspath
+	into 'runtime/'
+
+	doFirst {
+		def runtimeDir = file('runtime')
+		runtimeDir.deleteDir()
+		runtimeDir.mkdir()
+	}
+
+	doLast {
+		file('runtime').deleteDir()
+	}
+}

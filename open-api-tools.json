@@ -1,0 +1,10 @@
+{
+  "enumPropertyName": "UPPERCASE",
+  "gradleBuildFile": "false",
+  "serializationLibrary": "jackson",
+  "usesSwaggerUI": "false",
+  "documentationProvider": "none",
+  "serviceInterface": "true",
+  "idea": "true",
+  "useSpringBoot3": "true"
+}

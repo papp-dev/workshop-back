@@ -1,0 +1,37 @@
+{
+  "title": "User",
+  "description": "Object for user profile",
+  "type": "object",
+  "required": [
+    "artist_name",
+    "description",
+    "phone_number",
+    "pix_key"
+  ],
+  "properties": {
+    "artist_image_url": {
+      "type": "string",
+      "example": "http://imagem.com"
+    },
+    "artist_name": {
+      "type": "string",
+      "example": "Milionário & José Rico"
+    },
+    "description": {
+      "type": "string",
+      "example": "Choooooooora Viola"
+    },
+    "phone_number": {
+      "type": "string",
+      "example": "+5544999911111"
+    },
+    "pix_key": {
+      "type": "string",
+      "example": "dcta478j-196l-03fm-t6gh-4298er7845m2"
+    },
+    "pix_account_name": {
+      "type": "string",
+      "example": "Milionário & José Rico LTDA"
+    }
+  }
+}

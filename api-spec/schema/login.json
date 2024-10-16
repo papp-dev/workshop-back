@@ -1,0 +1,19 @@
+{
+  "title": "Login with user name",
+  "description": "Object for login",
+  "type": "object",
+  "required": [
+    "user_name",
+    "password"
+  ],
+  "properties": {
+    "user_name": {
+      "type": "string",
+      "example": "Paulo"
+    },
+    "password": {
+      "type": "string",
+      "example": "password"
+    }
+  }
+}

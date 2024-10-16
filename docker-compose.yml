@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8190:8080
+    volumes:
+      - ./src/main:/app/src/main
+    restart: always
+    container_name: workshop-back
+    networks:
+      - workshop-network
+    depends_on:
+      - mysql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/workshop-back
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=password
+
+  mysql:
+    image: mysql:latest
+    restart: always
+    networks:
+      - workshop-network
+    volumes:
+      - ./.data/mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_TCP_PORT: 3306
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: workshop
+      MYSQL_USER: workshop
+      MYSQL_PASSWORD: password
+    container_name: mysql
+
+networks:
+  workshop-network:
+    external: true

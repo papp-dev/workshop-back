@@ -1,0 +1,6 @@
+[development]
+host=localhost
+port=3306
+schema=user-service
+user=root
+password=password
