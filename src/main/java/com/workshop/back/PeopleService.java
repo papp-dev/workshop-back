@@ -1,8 +1,6 @@
 package com.workshop.back;
 
 import com.workshop.back.model.Person;
-import com.workshop.back.model.PersonDto;
-import com.workshop.back.model.PersonMinusResponseDto;
 import com.workshop.back.repository.PersonRepository;
 import java.math.BigDecimal;
 import java.util.List;
@@ -13,35 +11,37 @@ import org.springframework.stereotype.Service;
 public class PeopleService {
   @Autowired private PersonRepository personRepository;
 
-  public PersonMinusResponseDto createPerson(PersonDto personDto) {
+  public PersonResponseDto createPerson(PersonDto personDto) {
     Person createdPerson =
         this.personRepository.save(
             new Person("", personDto.getName(), personDto.getWeight(), personDto.getHeight()));
     BigDecimal imcIndex = this.getImcIndex(createdPerson.getWeight(), createdPerson.getHeight());
     String imcClassification = this.getImcClassification(imcIndex);
-    return new PersonMinusResponseDto(
-        createdPerson.getResourceId(),
-        createdPerson.getName(),
-        createdPerson.getWeight(),
-        createdPerson.getHeight(),
-        imcIndex,
-        imcClassification);
+    return PersonResponseDto.builder()
+        .id(createdPerson.getResourceId())
+        .name(createdPerson.getName())
+        .weight(createdPerson.getWeight())
+        .height(createdPerson.getHeight())
+        .imcIndex(imcIndex)
+        .imcClassification(imcClassification)
+        .build();
   }
 
-  public List<PersonMinusResponseDto> listPeople() {
+  public List<PersonResponseDto> listPeople() {
     List<Person> people = this.personRepository.findAll();
     return people.stream()
         .map(
             person -> {
               BigDecimal imcIndex = this.getImcIndex(person.getWeight(), person.getHeight());
               String imcClassification = this.getImcClassification(imcIndex);
-              return new PersonMinusResponseDto(
-                  person.getResourceId(),
-                  person.getName(),
-                  person.getWeight(),
-                  person.getHeight(),
-                  imcIndex,
-                  imcClassification);
+              return PersonResponseDto.builder()
+                  .id(person.getResourceId())
+                  .name(person.getName())
+                  .weight(person.getWeight())
+                  .height(person.getHeight())
+                  .imcIndex(imcIndex)
+                  .imcClassification(imcClassification)
+                  .build();
             })
         .toList();
   }

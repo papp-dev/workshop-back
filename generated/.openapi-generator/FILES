@@ -1,0 +1,7 @@
+.openapi-generator-ignore
+README.md
+pom.xml
+src/main/java/com/workshop/back/ApiUtil.java
+src/main/java/com/workshop/back/PeopleApi.java
+src/main/java/com/workshop/back/PersonDto.java
+src/main/java/com/workshop/back/PersonResponseDto.java

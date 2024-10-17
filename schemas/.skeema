@@ -1,6 +1,6 @@
 [development]
-host=localhost
-port=3306
+host=mysql
+port=3307
 schema=workshop-back
 user=root
 password=password

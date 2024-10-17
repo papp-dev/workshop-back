@@ -1,5 +1,14 @@
 FROM eclipse-temurin:21-noble
 
+# Install wget and unzip
+RUN apt-get update && apt-get install -y wget unzip
+
+# Install Skeema
+RUN wget https://github.com/skeema/skeema/releases/download/v1.10.1/skeema_1.10.1_linux_amd64.tar.gz && \
+    tar -xzf skeema_1.10.1_linux_amd64.tar.gz && \
+    mv skeema /usr/local/bin/ && \
+    rm skeema_1.10.1_linux_amd64.tar.gz
+
 WORKDIR /app
 
 COPY . /app
