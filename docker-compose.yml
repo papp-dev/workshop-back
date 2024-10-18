@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  api:
+  workshop-back:
     build:
       context: .
       dockerfile: Dockerfile
@@ -40,4 +40,5 @@ services:
 
 networks:
   workshop-network:
+    driver: bridge
     external: true
