@@ -4,6 +4,7 @@ import com.workshop.back.model.Person;
 import com.workshop.back.repository.PersonRepository;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,11 @@ public class PeopleService {
   public PersonResponseDto createPerson(PersonDto personDto) {
     Person createdPerson =
         this.personRepository.save(
-            new Person("", personDto.getName(), personDto.getWeight(), personDto.getHeight()));
+            new Person(
+                UUID.randomUUID().toString(),
+                personDto.getName(),
+                personDto.getWeight(),
+                personDto.getHeight()));
     BigDecimal imcIndex = this.getImcIndex(createdPerson.getWeight(), createdPerson.getHeight());
     String imcClassification = this.getImcClassification(imcIndex);
     return PersonResponseDto.builder()
