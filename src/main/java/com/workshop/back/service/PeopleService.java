@@ -1,16 +1,21 @@
-package com.workshop.back;
+package com.workshop.back.service;
 
+import com.workshop.back.PersonDto;
+import com.workshop.back.PersonResponseDto;
 import com.workshop.back.model.Person;
 import com.workshop.back.repository.PersonRepository;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PeopleService {
   @Autowired private PersonRepository personRepository;
+  Logger logger = LoggerFactory.getLogger(PeopleService.class);
 
   public PersonResponseDto createPerson(PersonDto personDto) {
     Person createdPerson =
@@ -52,10 +57,12 @@ public class PeopleService {
   }
 
   private BigDecimal getImcIndex(BigDecimal weight, BigDecimal height) {
+    logger.info("Calculating Imc Index");
     return BigDecimal.ZERO;
   }
 
   private String getImcClassification(BigDecimal imcIndex) {
+    logger.info("Calculating Imc Classification");
     return "CLASSIFICAÇÃO A CALCULAR";
   }
 }
