@@ -58,11 +58,22 @@ public class PeopleService {
 
   private BigDecimal getImcIndex(BigDecimal weight, BigDecimal height) {
     logger.info("Calculating Imc Index");
-    return BigDecimal.ZERO;
+    double altura = this.bigDecimalToDouble(height);
+    double peso = this.bigDecimalToDouble(weight);
+    double imc = 0;
+    return this.doubleToBigDecimal(imc);
   }
 
   private String getImcClassification(BigDecimal imcIndex) {
     logger.info("Calculating Imc Classification");
-    return "CLASSIFICAÇÃO A CALCULAR";
+    return "CLASSIFICAÇÃO A CALCULAR123";
+  }
+
+  private double bigDecimalToDouble(BigDecimal bigDecimal) {
+    return bigDecimal.doubleValue();
+  }
+
+  private BigDecimal doubleToBigDecimal(double dbl) {
+    return new BigDecimal(dbl);
   }
 }
