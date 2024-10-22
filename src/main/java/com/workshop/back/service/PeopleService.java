@@ -66,7 +66,7 @@ public class PeopleService {
 
   private String getImcClassification(BigDecimal imcIndex) {
     logger.info("Calculating Imc Classification");
-    return "CLASSIFICAÇÃO A CALCULAR123";
+    return "CLASSIFICAÇÃO A CALCULAR";
   }
 
   private double bigDecimalToDouble(BigDecimal bigDecimal) {
